@@ -10,5 +10,7 @@ npm run dev
 yarn dev
 ```
 
+local env file added valid only for 2 weeks from the submission.
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
