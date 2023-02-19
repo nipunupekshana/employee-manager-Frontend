@@ -13,13 +13,13 @@ import "../styles/globals.css";
 function App({ Component, ...rest }) {
   const search = ["First,Last Name", "Email", "Gender", "Phone"];
   const { store, props } = wrapper.useWrappedStore(rest);
-  const { userLoading } = useSelector((state) => state.user);
+  const { userLoading,userFetching } = useSelector((state) => state.user);
   const { pageProps } = props;
   return (
     <SSRProvider>
       <searchContext.Provider value={search}>
         <Provider store={store}>
-          {userLoading && <Overlay />}
+          {userLoading || userFetching && <Overlay />}
           <Toast />
           <Layout>
             <Head>

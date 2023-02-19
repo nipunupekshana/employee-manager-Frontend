@@ -5,7 +5,7 @@ import classes from "./UsersListTable.module.css";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ConfirmationModal from "../../components/Custom/modal";
-import { fetchUsers, removeUser } from "../../store/user-slice";
+import {removeUser } from "../../store/user-slice";
 import { useDispatch } from "react-redux";
 import Table from "react-bootstrap/Table";
 import { Button, Row } from "react-bootstrap";
@@ -14,21 +14,17 @@ function UsersList(props) {
   const dispatch = useDispatch();
   const router = useRouter();
   const {filteredUsers,users,userLoading,isSearch } = useSelector((state) => state.user);
-  const [filteredEmployees, setFilteredEmployees] = useState(users);
+  const [filteredEmployees, setFilteredEmployees] = useState([...users]);
   const [deleteId, setDeleteId] = useState(null);
 
 
-  // fetch users when component is mounted
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
 
   // when search is done, filteredUsers will be updated
   useEffect(() => {
     if(isSearch)
-    setFilteredEmployees(filteredUsers);
+    setFilteredEmployees([...filteredUsers]);
     else
-    setFilteredEmployees(users);
+    setFilteredEmployees([...users]);
   }, [filteredUsers, isSearch, users]);
   
   const deleteUserHandler = (userId) => {

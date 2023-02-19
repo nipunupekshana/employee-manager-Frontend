@@ -9,7 +9,6 @@ function NewUser() {
   const dispatch = useDispatch();
   const router = useRouter();
   async function addUserHandler(userData, callback) {
-    console.log(`userData`, userData);
     try {
       dispatch(
         addUser(userData, () => {

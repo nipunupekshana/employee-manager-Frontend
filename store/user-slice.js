@@ -12,6 +12,7 @@ const initialState = {
   users: [],
   filteredUsers: [],
   userLoading: false,
+  userFetching: false,
   isSearch: false,
 };
 
@@ -40,13 +41,15 @@ const usersSlice = createSlice({
     setUserLoading: (state, action) => {
       state.userLoading = action.payload;
     },
+    setUserFetching: (state, action) => {
+      state.userFetching = action.payload;
+    },
     setIsSearch: (state, action) => {
       state.isSearch = action.payload;
     }
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
-      console.log("HYDRATE", state);
       return {
         ...state, // use previous state
         ...action.payload.user, //apply data from hydration
@@ -56,15 +59,19 @@ const usersSlice = createSlice({
 });
 
 export const fetchUsers = () => async (dispatch) => {
-  dispatch(usersSlice.actions.setUserLoading(true));
-  const response = await axios.get("/employee");
+  try {
+    dispatch(usersSlice.actions.setUserFetching(true));
+    const response = await axios.get("/employee");
 
-  if (response.status !== 200) {
-    throw new Error("Sending user data failed.");
+    if (response.status !== 200) {
+      throw new Error("Sending user data failed.");
+    }
+    const loadedUsers = [...response.data];
+    dispatch(usersSlice.actions.setAllUsers(loadedUsers));
+    dispatch(usersSlice.actions.setUserFetching(false));
+  } catch (error) {
+    dispatch(usersSlice.actions.setUserFetching(false));
   }
-  const loadedUsers = [...response.data];
-  dispatch(usersSlice.actions.setAllUsers(loadedUsers));
-  dispatch(usersSlice.actions.setUserLoading(false));
 };
 
 export const findUser = (id) => async (dispatch) => {
@@ -162,7 +169,6 @@ export const removeUser = (userId, callback) => async (dispatch) => {
 };
 
 export const filterUsers = (searchText) => async (dispatch, getState) => {
-  console.log("searchText", searchText);
   const { users } = getState().user;
   if (!searchText) {
     dispatch(usersSlice.actions.setFilteredUsers([]));
@@ -179,7 +185,6 @@ export const filterUsers = (searchText) => async (dispatch, getState) => {
       user.gender.toLowerCase().includes(searchText.toLowerCase().charAt(0))
     );
   });
-  console.log("filteredUsers", filteredUsers);
   dispatch(usersSlice.actions.setFilteredUsers(filteredUsers));
   dispatch(usersSlice.actions.setIsSearch(true));
 };

@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Col, Row } from "react-bootstrap";
 import { useRouter } from "next/router";
 import { BiTable } from "react-icons/bi";
 import { FaThList } from "react-icons/fa";
 import UsersList from "../../../components/user/UsersListTable";
 import SearchBar from "../../../components/Custom/searchBar";
-import { filterUsers } from "../../../store/user-slice";
+import { fetchUsers, filterUsers } from "../../../store/user-slice";
 import searchContext from "../../../context/searchContext";
 import classes from "./list.module.css";
 
@@ -14,6 +14,12 @@ function List() {
   const dispatch = useDispatch();
   const router = useRouter();
   const searchTexts = useContext(searchContext);
+  const { userFetching} = useSelector((state) => state.user);
+  // fetch users when component is mounted
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
   const [isList, setIsList] = useState(true);
   const handleAddEmployee = () => {
     router.push("/employee/add");
@@ -42,7 +48,7 @@ function List() {
         </Col>
       </Row>
       <Row>
-        <UsersList isList={isList} />
+        {!userFetching && <UsersList isList={isList} />}
       </Row>
     </>
   );
