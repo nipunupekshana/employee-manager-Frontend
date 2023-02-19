@@ -8,6 +8,7 @@ import UsersList from "../../../components/user/UsersListTable";
 import SearchBar from "../../../components/Custom/searchBar";
 import { fetchUsers, filterUsers } from "../../../store/user-slice";
 import searchContext from "../../../context/searchContext";
+//import { wrapper } from "../../../store/store";
 import classes from "./list.module.css";
 
 function List() {
@@ -47,11 +48,24 @@ function List() {
           </Button>
         </Col>
       </Row>
-      <Row>
-        {!userFetching && <UsersList isList={isList} />}
-      </Row>
+      <Row>{!userFetching && <UsersList isList={isList} />}</Row>
     </>
   );
 }
+
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) =>
+//     async ({ req, res, ...etc }) => {
+//       console.log(
+//         "2. Page.getServerSideProps uses the store to dispatch things"
+//       );
+//       const response = await fetch(`http://localhost:3000/api/employee`);
+//       const data = await response.json();
+//       store.dispatch(actions.setAllUsers(data));
+//       return {
+//         props: {},
+//       };
+//     }
+// );
 
 export default List;
