@@ -21,7 +21,6 @@ const usersSlice = createSlice({
   initialState: initialState,
   reducers: {
     setAllUsers: (state, action) => {
-      console.log(`setAllUsers called`);
       state.users = action.payload;
     },
     setFilteredUsers: (state, action) => {
