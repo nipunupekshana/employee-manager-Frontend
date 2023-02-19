@@ -1,0 +1,20 @@
+.form {
+  padding: 1rem;
+}
+.form label {
+  padding-top: 0.5rem;
+  font-weight: bold;
+}
+
+.actions {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.actions button {
+  font: inherit;
+  cursor: pointer;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+}

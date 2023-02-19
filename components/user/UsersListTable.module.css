@@ -1,0 +1,29 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.actions{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.center-items{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.table-size{
+  padding: 6rem;
+  padding-top: 0;
+}
+
+@media only screen and (max-width: 800px) {
+  .actions{
+    width: 9rem;
+  }
+}

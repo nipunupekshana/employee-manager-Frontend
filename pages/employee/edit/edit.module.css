@@ -1,0 +1,15 @@
+.edit-emp{
+    padding: 5rem;
+    padding-top: 0;
+}
+
+.list-view{
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media only screen and (max-width: 800px) {
+    .edit-emp{
+        padding: 1rem;
+    }
+}
