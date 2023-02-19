@@ -61,7 +61,9 @@ function UsersList(props) {
         onCancel={handleCancelDelete}
         disabled={userLoading}
       />
-      {!filteredEmployees.length && !userLoading && <p>No users found.</p>}
+      {!filteredEmployees.length && !userLoading && <div className={classes.noUsersWrapper}>
+        <p className={classes.noUsers}>No users found.</p>
+        </div>}
       {props.isList == true && !userLoading && filteredEmployees ? (
         <Row className={classes["center-items"]}>
           {filteredEmployees.map((user) => (
