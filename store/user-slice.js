@@ -11,7 +11,8 @@ axios.defaults.baseURL = `${'http://localhost:8022'}/api`;
 const initialState = {
   users: [],
   filteredUsers: [],
-  userLoading: false
+  userLoading: false,
+  isSearch: false,
 };
 
 const usersSlice = createSlice({
@@ -39,6 +40,9 @@ const usersSlice = createSlice({
     setUserLoading: (state, action) => {
       state.userLoading = action.payload;
     },
+    setIsSearch: (state, action) => {
+      state.isSearch = action.payload;
+    }
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
@@ -161,9 +165,11 @@ export const removeUser = (userId, callback) => async (dispatch) => {
 };
 
 export const filterUsers = (searchText) => async (dispatch, getState) => {
+  console.log("searchText", searchText);
   const { users } = getState().user;
   if (!searchText) {
     dispatch(usersSlice.actions.setFilteredUsers([]));
+    dispatch(usersSlice.actions.setIsSearch(false));
     return;
   }
   let filteredUsers = users.filter((user) => {
@@ -176,7 +182,9 @@ export const filterUsers = (searchText) => async (dispatch, getState) => {
       user.gender.toLowerCase().includes(searchText.toLowerCase().charAt(0))
     );
   });
+  console.log("filteredUsers", filteredUsers);
   dispatch(usersSlice.actions.setFilteredUsers(filteredUsers));
+  dispatch(usersSlice.actions.setIsSearch(true));
 };
 
 export const reducers = usersSlice.reducer;

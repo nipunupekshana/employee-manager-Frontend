@@ -13,7 +13,7 @@ import { Button, Row } from "react-bootstrap";
 function UsersList(props) {
   const dispatch = useDispatch();
   const router = useRouter();
-  const {filteredUsers,users,userLoading } = useSelector((state) => state.user);
+  const {filteredUsers,users,userLoading,isSearch } = useSelector((state) => state.user);
   const [filteredEmployees, setFilteredEmployees] = useState(users);
   const [deleteId, setDeleteId] = useState(null);
 
@@ -25,11 +25,11 @@ function UsersList(props) {
 
   // when search is done, filteredUsers will be updated
   useEffect(() => {
-    if(filteredUsers.length > 0)
+    if(isSearch)
     setFilteredEmployees(filteredUsers);
     else
     setFilteredEmployees(users);
-  }, [filteredUsers, users]);
+  }, [filteredUsers, isSearch, users]);
   
   const deleteUserHandler = (userId) => {
     setDeleteId(userId);
