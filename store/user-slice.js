@@ -139,7 +139,6 @@ export const updateUserData = (userData, callback) => async (dispatch) => {
 // create a function to remove user data and make the API call
 export const removeUser = (userId, callback) => async (dispatch) => {
   try {
-    dispatch(usersSlice.actions.setUserLoading(true));
     const response = await axios.delete(`/employee/${userId}`);
 
     if (response.status !== 200) {
@@ -148,7 +147,6 @@ export const removeUser = (userId, callback) => async (dispatch) => {
 
     // remove user data from the state
     dispatch(usersSlice.actions.removeUsers(userId));
-    dispatch(usersSlice.actions.setUserLoading(false));
     toast.success("User removed successfully!");
 
     // call the callback function to redirect to home page
@@ -157,7 +155,6 @@ export const removeUser = (userId, callback) => async (dispatch) => {
     }
   } catch (error) {
     console.error(error);
-    dispatch(usersSlice.actions.setUserLoading(false));
     toast.error(
       error.response.data.message ? error.response.data.message : error.message
     );
