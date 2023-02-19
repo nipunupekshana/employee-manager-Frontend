@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { HYDRATE } from "next-redux-wrapper";
-//import getConfig from 'next/config'
-// const {
-//   publicRuntimeConfig: {BASE_URL},  // Available both client and server side
-// } = getConfig()
-axios.defaults.baseURL = `${'http://localhost:8022'}/api`;
+import getConfig from 'next/config'
+const {
+  publicRuntimeConfig: {BASE_URL},  // Available both client and server side
+} = getConfig()
+axios.defaults.baseURL = `${BASE_URL}/api`;
 
 const initialState = {
   users: [],
@@ -21,6 +21,7 @@ const usersSlice = createSlice({
   initialState: initialState,
   reducers: {
     setAllUsers: (state, action) => {
+      console.log(`setAllUsers called`);
       state.users = action.payload;
     },
     setFilteredUsers: (state, action) => {
@@ -190,4 +191,5 @@ export const filterUsers = (searchText) => async (dispatch, getState) => {
 };
 
 export const reducers = usersSlice.reducer;
+export const actions = usersSlice.actions;
 export default usersSlice;
