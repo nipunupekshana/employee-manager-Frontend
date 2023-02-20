@@ -6,12 +6,12 @@
   display: flex;
   overflow: hidden;
   margin-top: 1rem;
-  border-radius: 12px;
   justify-content: center;
 }
 
 .image img {
   object-fit: cover;
+  border-radius: 12px;
 }
 
 .content {
